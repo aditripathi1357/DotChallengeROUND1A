@@ -1,5 +1,0 @@
-{
-  "selected_model": "prajjwal1/bert-tiny",
-  "cache_dir": "./models",
-  "size_limit_mb": 200
-}

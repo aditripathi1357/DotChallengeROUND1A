@@ -13,7 +13,7 @@ Based on testing with sample PDFs:
 - ✅ **Processing Speed**: < 10 seconds per 50-page PDF
 - ✅ **Accuracy**: 92-95% for English documents, 85-90% for multilingual
 - ✅ **Model Size**: ~34MB (well under 200MB limit)
-- ✅ **Multi-language Support**: English, Hindi, Japanese, Chinese, Korean, Arabic, Russian
+- ✅ **Multi-language Support**: English, Hindi etc...
 
 ### Sample Results
 ```

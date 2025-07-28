@@ -12,7 +12,7 @@ This solution extracts hierarchical document structure from PDFs, enabling smart
 Based on testing with sample PDFs:
 - ✅ **Processing Speed**: < 10 seconds per 50-page PDF
 - ✅ **Accuracy**: 92-95% for English documents, 85-90% for multilingual
-- ✅ **Model Size**: ~150MB (well under 200MB limit)
+- ✅ **Model Size**: ~34MB (well under 200MB limit)
 - ✅ **Multi-language Support**: English, Hindi, Japanese, Chinese, Korean, Arabic, Russian
 
 ### Sample Results
@@ -46,35 +46,11 @@ Based on testing with sample PDFs:
 
 ### 3. **Libraries Used**
 - **PyMuPDF (1.23.26)**: PDF text extraction with formatting metadata
-- **Transformers (4.36.0)**: NLP processing for content analysis
+- **Transformers (4.36.0)**: NLP processing for content analysis (prajjwal1/bert-tiny ~17MB)
 - **PyTorch (2.2.0+)**: Neural network backend
 - **TensorFlow-CPU (2.16.0+)**: Additional ML capabilities
 - **NumPy**: Numerical operations and statistics
 
-**🧠 Pretrained Model Download**
-This project uses the pretrained model prajwal1/bert-tiny from Hugging Face Transformers.
-
-When you run the project for the first time, it will automatically download the model and cache it under the ~/.cache/huggingface/ directory. If running in a Docker container, ensure the container has internet access for the first run.
-
-If internet access is disabled or restricted (e.g., in competition submissions), make sure to manually download and place the model inside:
-
-**But I already put in Github**
-
-```bash
-Copy
-Edit
-models/models--prajwal1--bert-tiny/
-You can download the model manually using:
-
-bash
-Copy
-Edit
-from transformers import AutoModel, AutoTokenizer
-
-AutoModel.from_pretrained("prajwal1/bert-tiny")
-AutoTokenizer.from_pretrained("prajwal1/bert-tiny")
-Then copy the downloaded files into the directory structure expected by the app.
-```
 ## 🏗️ Setup Instructions
 
 ### 📋 Prerequisites
@@ -87,10 +63,29 @@ Then copy the downloaded files into the directory structure expected by the app.
 #### 1. Clone the Repository
 ```bash
 git clone https://github.com/aditripathi1357/DotChallengeROUND1A.git
-cd DotChallengeROUND1A
+cd DotChallengeROUND1A/pdf_heading_extractor
 ```
 
-#### 2. Local Testing (Optional)
+
+#### 2. Download Required Models
+```bash
+# Download and cache ML models locally (required for processing)
+python download_models.py
+```
+
+**Expected Output:**
+```
+--- Testing prajjwal1/bert-tiny ---
+Downloading model: prajjwal1/bert-tiny
+✅ Successfully downloaded: prajjwal1/bert-tiny
+Model cache size: 34.31 MB
+✅ Model size within 200MB limit
+Model prajjwal1/bert-tiny ready to use!
+✅ Model info saved to models/model_info.json
+model.safetensors: 100%|████████████████| 17.7M/17.7M [00:01<00:00, 13.0MB/s]
+```
+
+#### 3. Local Testing (Optional)
 ```bash
 # Install dependencies
 pip install -r requirements.txt
@@ -99,7 +94,7 @@ pip install -r requirements.txt
 python main_simple.py
 ```
 
-#### 3. Test with Your Own PDFs
+#### 4. Test with Your Own PDFs
 ```bash
 # Create input directory and add your PDFs
 mkdir input
@@ -199,28 +194,33 @@ docker run --rm \
 | Constraint | Requirement | Our Performance |
 |------------|-------------|-----------------|
 | Execution Time | ≤ 10 seconds/50-page PDF | ~5-8 seconds |
-| Model Size | ≤ 200MB | ~150MB |
+| Model Size | ≤ 200MB | ~34MB |
 | Network | No internet access | ✅ Fully offline |
 | Architecture | AMD64 CPU | ✅ Compatible |
 | Memory | 16GB RAM, 8 CPUs | ✅ Optimized |
 
 ### 🎯 Accuracy Results
 - **English Documents**: 92-95% (academic papers, technical docs)
-- **Multilingual Documents**: 85-90% (Hindi , etc.. )
+- **Multilingual Documents**: 85-90% (Hindi, etc.)
 - **Complex Layouts**: 85-90% (multi-column, irregular formatting)
 
 ## 🔧 File Structure
 
 ```
-DotChallengeROUND1A/
+DotChallengeROUND1A/pdf_heading_extractor/
 ├── Dockerfile                 # Container definition
 ├── requirements.txt           # Python dependencies  
 ├── README.md                 # This file
+├── download_models.py        # Model download script
 ├── main_simple.py            # Main processing script
+├── .gitignore               # Git ignore patterns
 ├── src/                      # Source code
 │   ├── utils.py             # Text processing utilities
 │   ├── heading_detector.py  # Core detection logic
 │   └── pdf_processor.py     # PDF processing workflow
+├── models/                   # Downloaded ML models (excluded from git)
+│   ├── model_info.json     # Model configuration
+│   └── [cached models]     # Auto-downloaded model files
 ├── input/                    # Input PDFs (create this)
 ├── output/                   # Generated JSON files
 └── sample_data/              # Sample test files
@@ -230,6 +230,9 @@ DotChallengeROUND1A/
 
 ### Test with Sample Data
 ```bash
+# First, ensure models are downloaded
+python download_models.py
+
 # Test basic functionality
 python main_simple.py
 
@@ -279,6 +282,12 @@ The system detects and processes documents in:
 
 ### Common Issues
 
+**Models not found:**
+```bash
+# Download models first
+python download_models.py
+```
+
 **No headings detected:**
 ```bash
 # Check if PDF has extractable text
@@ -320,7 +329,6 @@ This solution is developed for **DotChallenge Round 1A**: "Connecting the Dots T
 - ✅ Heading Detection Accuracy (25 points)
 - ✅ Performance & Compliance (10 points)  
 - ✅ Multilingual Support (10 points)
-
 
 ---
 

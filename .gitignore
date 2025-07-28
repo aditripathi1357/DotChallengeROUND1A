@@ -1,7 +1,4 @@
-# Reset any existing git state
-git reset
-
-# Create .gitignore to exclude model files from repository
+# Create .gitignore file to exclude model files
 cat > .gitignore << 'EOF'
 # Python
 __pycache__/
@@ -60,4 +57,3 @@ temp/
 *.pkl
 *.pickle
 EOF
-

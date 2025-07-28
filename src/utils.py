@@ -17,6 +17,26 @@ def setup_logging(level=logging.INFO):
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     )
 
+def check_model_constraints(cache_dir: str, size_limit_mb: int = 200) -> bool:
+    """Check if model size is within constraints"""
+    if not os.path.exists(cache_dir):
+        return True
+    
+    total_size = 0
+    try:
+        for dirpath, dirnames, filenames in os.walk(cache_dir):
+            for filename in filenames:
+                filepath = os.path.join(dirpath, filename)
+                if os.path.exists(filepath):
+                    total_size += os.path.getsize(filepath)
+        
+        size_mb = total_size / (1024 * 1024)  # Convert to MB
+        logging.info(f"Model cache size: {size_mb:.2f} MB")
+        return size_mb <= size_limit_mb
+    except Exception as e:
+        logging.error(f"Error checking model constraints: {e}")
+        return False
+
 def validate_json_schema(data: Dict) -> bool:
     """Validate output JSON against required schema with enhanced checks"""
     required_fields = ["title", "outline"]

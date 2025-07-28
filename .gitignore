@@ -1,0 +1,67 @@
+# Reset the git add (don't worry, files won't be deleted)
+git reset
+
+# Create .gitignore file first
+@"
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# AI Models Cache (IMPORTANT: Don't commit large model files)
+models/
+.cache/
+*.bin
+*.safetensors
+*.onnx
+
+# Output files
+output/*.json
+output/*.xlsx
+output/*.csv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+
+# Large files that shouldn't be in Git
+*.model
+*.pkl
+*.pickle
+"@ | Out-File -FilePath ".gitignore" -Encoding UTF8

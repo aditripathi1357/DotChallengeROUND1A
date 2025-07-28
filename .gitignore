@@ -37,10 +37,7 @@ models/
 *.safetensors
 *.onnx
 
-# Output files
-output/*.json
-output/*.xlsx
-output/*.csv
+
 
 # IDE
 .vscode/

@@ -1,8 +1,8 @@
-# Reset the git add (don't worry, files won't be deleted)
+# Reset any existing git state
 git reset
 
-# Create .gitignore file first
-@"
+# Create .gitignore to exclude model files from repository
+cat > .gitignore << 'EOF'
 # Python
 __pycache__/
 *.py[cod]
@@ -37,8 +37,6 @@ models/
 *.safetensors
 *.onnx
 
-
-
 # IDE
 .vscode/
 .idea/
@@ -61,4 +59,5 @@ temp/
 *.model
 *.pkl
 *.pickle
-"@ | Out-File -FilePath ".gitignore" -Encoding UTF8
+EOF
+

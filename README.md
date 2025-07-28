@@ -51,6 +51,30 @@ Based on testing with sample PDFs:
 - **TensorFlow-CPU (2.16.0+)**: Additional ML capabilities
 - **NumPy**: Numerical operations and statistics
 
+**🧠 Pretrained Model Download**
+This project uses the pretrained model prajwal1/bert-tiny from Hugging Face Transformers.
+
+When you run the project for the first time, it will automatically download the model and cache it under the ~/.cache/huggingface/ directory. If running in a Docker container, ensure the container has internet access for the first run.
+
+If internet access is disabled or restricted (e.g., in competition submissions), make sure to manually download and place the model inside:
+
+**But I already put in Github**
+
+```bash
+Copy
+Edit
+models/models--prajwal1--bert-tiny/
+You can download the model manually using:
+
+bash
+Copy
+Edit
+from transformers import AutoModel, AutoTokenizer
+
+AutoModel.from_pretrained("prajwal1/bert-tiny")
+AutoTokenizer.from_pretrained("prajwal1/bert-tiny")
+Then copy the downloaded files into the directory structure expected by the app.
+```
 ## 🏗️ Setup Instructions
 
 ### 📋 Prerequisites
